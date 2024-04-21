@@ -37,7 +37,6 @@ def image_refiner(gray):
     gray = np.lib.pad(gray, (rowsPadding, colsPadding), 'constant')
     return gray
 
-# Función para obtener el número resultante de la imagen procesada
 def get_predict_num(path):
     img = cv2.imread(path, 0)
 
@@ -58,6 +57,15 @@ def get_predict_num(path):
             roi = img[y:y+h, x:x+w]
             roi = cv2.bitwise_not(roi)
             roi = image_refiner(roi)
+            
+            # Determinar si se necesita aplicar espejo horizontal
+            # Si la letra está más a la izquierda, no es necesario el espejo
+            if x < img.shape[1] / 2:
+                roi = cv2.flip(roi, 1)  # Espejo horizontal
+
+            # Rotar la imagen si es necesario
+            # Ejemplo de rotación de 90 grados hacia la izquierda
+            roi = cv2.rotate(roi, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             # Obtener predicción del dígito procesado 
             pred = predict_digit(roi)
