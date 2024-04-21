@@ -34,7 +34,7 @@ screen.blit(title, (width+50, height/4))
 # Display the number prediction on to the screen
 def show_number_pred():
     pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
-    title = font.render("Tu número es:", True, white)
+    title = font.render("Tu palabra es:", True, white)
     screen.blit(title, (width+10, height/4))
     number = font.render(final_text, True, white)
     screen.blit(number, (width+50, height/2.5))
@@ -66,7 +66,7 @@ try:
         if(e.type == pygame.MOUSEBUTTONDOWN and e.button == 3):
             screen.fill(white)
             pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
-            title = font.render("Tu número es:", True, white)
+            title = font.render("Ingresa Palabra:", True, white)
             screen.blit(title, (width+10, height/4))
 
         # Quit Game
