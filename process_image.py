@@ -13,7 +13,7 @@ def predict_digit(img):
     # Realizar la predicción y obtener el índice de la clase con mayor probabilidad
     return np.argmax(model.predict(test_image))
 
-# Función para refinar cada dígito de la imagen
+# Función para refinar cada letra de la imagen
 def image_refiner(gray):
     org_size = 22
     img_size = 28
@@ -73,7 +73,7 @@ def get_predict_num(path):
             # Convertir la predicción en un carácter
             predicted_char = chr(pred + 65 - 1) if pred < 27 else None
 
-            # Agregar el dígito a la cadena de números predichos
+            # Agregar el dígito a la cadena de letras predichos
             predicted_chars += predicted_char
 
     return predicted_chars
