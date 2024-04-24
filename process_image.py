@@ -7,7 +7,7 @@ from keras.models import load_model
 model = load_model('dense_model/letter_classifier.h5')
 
 # Función para predecir el dígito basado en la imagen procesada
-def predict_digit(img):
+def predict_word(img):
     # Aplanar la imagen
     test_image = img.reshape(-1, 784)
     # Realizar la predicción y obtener el índice de la clase con mayor probabilidad
@@ -37,7 +37,7 @@ def image_refiner(gray):
     gray = np.lib.pad(gray, (rowsPadding, colsPadding), 'constant')
     return gray
 
-def get_predict_num(path):
+def get_predict_word(path):
     img = cv2.imread(path, 0)
 
     ret, thresh = cv2.threshold(img, 127, 255, 0)
@@ -67,10 +67,10 @@ def get_predict_num(path):
             # Ejemplo de rotación de 90 grados hacia la izquierda
             roi = cv2.rotate(roi, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
-            # Obtener predicción del dígito procesado 
-            pred = predict_digit(roi)
+            # Obtener predicción de la letra procesada
+            pred = predict_word(roi)
             
-            # Convertir la predicción en un carácter
+            # Convertir la predicción en un carácter de ascii a caracter del alfabeto
             predicted_char = chr(pred + 65 - 1) if pred < 27 else None
 
             # Agregar el dígito a la cadena de letras predichos
