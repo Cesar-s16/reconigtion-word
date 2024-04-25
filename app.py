@@ -17,9 +17,6 @@ height = 400
 # Inicializa el reloj de Pygame
 clock = pygame.time.Clock()
 
-# Texto de predicción
-final_text = ""
-
 # Pantalla de análisis
 screen = pygame.display.set_mode((width+400, height))
 screen.fill(white)
@@ -35,19 +32,17 @@ title = font.render("Tu palabra es:", True, white)
 screen.blit(title, (width+50, height/4))
 
 # Muestra la predicción del número en la pantalla
-def show_word_pred():
+def show_word_pred(predicted_text):
     pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
     title = font.render("Tu palabra es:", True, white)
     screen.blit(title, (width+10, height/4))
-    word = font.render(final_text, True, white)
+    word = font.render(predicted_text, True, white)
     screen.blit(word, (width+50, height/2.5))
 
 # Recorta la superficie de la imagen
-def crop(orginal):
-    # Crea una nueva superficie del tamaño original menos 5 píxeles de ancho y alto
-    cropped = pygame.Surface((width-5, height-5))
-    # Copia la sección recortada de la imagen original a la nueva superficie
-    cropped.blit(orginal, (0, 0), (0, 0, width-5, height-5))
+def crop(original):
+    # Crea una nueva superficie que es una subsuperficie de la original
+    cropped = original.subsurface((0, 0, width-5, height-5))
     return cropped
 
 # Esta función dibuja una línea redondeada entre dos puntos en una superficie pygame.
@@ -75,10 +70,9 @@ try:
                     fname = "palabra.png"
                     img = crop(screen)
                     pygame.image.save(img, fname)
-                    predicted_text = get_predict_word(fname)
-                    final_text = predicted_text
-                    print(predicted_text)
-                    show_word_pred()
+                    predicted_word = get_predict_word(fname)
+                    print(predicted_word)
+                    show_word_pred(predicted_word)
 
                 # Verificar si se hizo clic en el botón "Limpiar"
                 elif width + 250 <= event.pos[0] <= width + 400 and height - 100 <= event.pos[1] <= height - 50:
@@ -88,28 +82,20 @@ try:
                     screen.blit(title, (width+10, height/4))
 
             # Empieza a dibujar al hacer clic en el click izquierdo
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button != 3:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 color = black
                 pygame.draw.circle(screen, color, event.pos, radius)
                 draw_on = True
-
             # Para de dibujar después de soltar el clic izquierdo
-            if event.type == pygame.MOUSEBUTTONUP and event.button != 3:
+            elif event.type == pygame.MOUSEBUTTONUP:
                 draw_on = False
-                # fname = "palabra.png"
-                # img = crop(screen)
-                # pygame.image.save(img, fname)
-
-                # predicted_text = get_predict_num(fname)
-                # final_text = predicted_text
-                # print(predicted_text)
-
             # Inicia el dibujo de la línea en la pantalla si draw_on es verdadero
-            if event.type == pygame.MOUSEMOTION:
+            elif event.type == pygame.MOUSEMOTION:
                 if draw_on:
                     pygame.draw.circle(screen, color, event.pos, radius)
                     roundline(screen, color, event.pos, last_pos, radius)
                 last_pos = event.pos
+
 
         # Dibujar botones
         pygame.draw.rect(screen, (150, 150, 150), (width+50, height-100, 150, 50))
