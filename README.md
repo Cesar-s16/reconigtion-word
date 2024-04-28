@@ -1,8 +1,8 @@
 # reconigtion-word
 Red neuronal multicapas que lee palabras realizadas a mano 
 
-[!NOTE]
-Unicamente lee letras separadas
+> [!NOTE]
+> Unicamente lee letras separadas
 
 # Descargas de librerias a utilizar de python:
 
@@ -24,8 +24,8 @@ https://www.mediafire.com/file/kc7crw48xyfdm2b/emnist-letters-test.csv/file
 
 https://www.mediafire.com/file/zgsm43aesxlbbp3/emnist-letters-train.csv/file
 
-[!NOTE]
-Página donde se descargó el dataset => https://www.kaggle.com/datasets/crawford/emnist/data
+> [!NOTE]
+> Página donde se descargó el dataset => https://www.kaggle.com/datasets/crawford/emnist/data
 
 # Imagen de prueba del sistema
 
