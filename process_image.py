@@ -4,7 +4,7 @@ import math
 from keras.models import load_model
 
 # Cargar el modelo previamente entrenado
-model = load_model('dense_model/letter_classifier.h5')
+model = load_model('dense_model/letter_classifier_best.h5')
 
 # Función para refinar cada letra de la imagen
 def image_refiner(gray):

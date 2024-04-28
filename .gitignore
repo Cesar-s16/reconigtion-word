@@ -1,2 +1,8 @@
+dense_model/emnist/emnist-letters-test.csv
+./dense_model/emnist/emnist-letters-test.csv
+
+dense_model/emnist/emnist-letters-train.csv
+./dense_model/emnist/emnist-letters-train.csv
+
 env/
 ./env
