@@ -9,10 +9,19 @@ last_pos = (0, 0)
 color = (255, 128, 0)
 radius = 7
 font_size = 500
+color = black  # Color inicial del bolígrafo
+is_erasing = False  # Variable para indicar si se está borrando
 
 # Tamaño de la pantalla
 width = 640
 height = 400
+
+# Dimensiones del área negra
+black_area_width = 400
+
+# Cargar imágenes del lápiz y el borrador
+lapiz_img = pygame.image.load("images/lapiz.png")
+borrador_img = pygame.image.load("images/borrador.png")
 
 # Inicializa el reloj de Pygame
 clock = pygame.time.Clock()
@@ -31,6 +40,18 @@ rect = pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
 title = font.render("Tu palabra es:", True, white)
 screen.blit(title, (width+50, height/4))
 
+# Mensaje sobre el modo del marcador
+marker_mode_msg = font.render("Modo: Bolígrafo", True, white)
+marker_mode_pos = (width+50, height/2)  # Posición del mensaje
+
+# Función para actualizar la imagen del marcador
+def update_marker_img():
+    global marker_img
+    if is_erasing:
+        marker_img = borrador_img
+    else:
+        marker_img = lapiz_img
+        
 # Muestra la predicción del número en la pantalla
 def show_word_pred(predicted_text):
     pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
@@ -63,9 +84,8 @@ try:
                 pygame.quit()
                 exit()
 
-            # Manejar clics de botón "Predecir" y "Limpiar"
+            # Manejar clics de botón "Predecir", "Limpiar" y "Borrador"
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # Verificar si se hizo clic en el botón "Predecir"
                 if width + 50 <= event.pos[0] <= width + 200 and height - 100 <= event.pos[1] <= height - 50:
                     fname = "palabra.png"
                     img = crop(screen)
@@ -74,37 +94,52 @@ try:
                     print(predicted_word)
                     show_word_pred(predicted_word)
 
-                # Verificar si se hizo clic en el botón "Limpiar"
                 elif width + 250 <= event.pos[0] <= width + 400 and height - 100 <= event.pos[1] <= height - 50:
                     screen.fill(white)
-                    pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
+                    pygame.draw.rect(screen, black, [width, 0, black_area_width, height], 0)
                     title = font.render("Ingresa Palabra:", True, white)
                     screen.blit(title, (width+10, height/4))
 
-            # Empieza a dibujar al hacer clic en el click izquierdo
-            if event.type == pygame.MOUSEBUTTONDOWN:
+                elif width + 250 <= event.pos[0] <= width + 400 and height - 200 <= event.pos[1] <= height - 150:
+                    is_erasing = not is_erasing
+                    update_marker_img()  # Actualizar la imagen del marcador
+
+            if is_erasing:
+                color = white
+            else:
                 color = black
-                pygame.draw.circle(screen, color, event.pos, radius)
-                draw_on = True
-            # Para de dibujar después de soltar el clic izquierdo
+
+            # Verificar si el evento del mouse está en el área de escritura
+            if event.type == pygame.MOUSEBUTTONDOWN and event.pos[0] < width:
+                if event.button == 1:
+                    pygame.draw.circle(screen, color, event.pos, radius)
+                    draw_on = True
             elif event.type == pygame.MOUSEBUTTONUP:
                 draw_on = False
-            # Inicia el dibujo de la línea en la pantalla si draw_on es verdadero
             elif event.type == pygame.MOUSEMOTION:
-                if draw_on:
+                if draw_on and event.pos[0] < width:
                     pygame.draw.circle(screen, color, event.pos, radius)
                     roundline(screen, color, event.pos, last_pos, radius)
                 last_pos = event.pos
 
-
-        # Dibujar botones
+       # Dibujar botones
         pygame.draw.rect(screen, (150, 150, 150), (width+50, height-100, 150, 50))
         pygame.draw.rect(screen, (150, 150, 150), (width+250, height-100, 150, 50))
+        pygame.draw.rect(screen, (150, 150, 150), (width+250, height-200, 150, 50))  # Botón Borrador
         font = pygame.font.Font(None, 36)
         text = font.render("Predecir", True, (255, 255, 255))
         screen.blit(text, (width+75, height-85))
         text = font.render("Limpiar", True, (255, 255, 255))
         screen.blit(text, (width+275, height-85))
+        text = font.render("Borrador", True, (255, 255, 255))  # Texto del botón Borrador
+        screen.blit(text, (width+260, height-185))  # Posición del texto del botón Borrador
+
+
+        # Actualizar el mensaje del modo del marcador
+        mode = font.render("Modo:", True, white)
+        screen.blit(mode, (width+10, 30))
+        update_marker_img()
+        screen.blit(marker_img, (width+90, 10))  # Posición de la imagen del marcador
 
         pygame.display.flip()
         clock.tick(60)

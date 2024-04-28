@@ -12,14 +12,15 @@ def image_refiner(gray):
     img_size = 28
     rows, cols = gray.shape
     
+    # Determinar la escala de factor
     if rows > cols:
         factor = org_size / rows
-        rows = org_size
-        cols = int(round(cols * factor))        
+        rows, cols = org_size, int(round(cols * factor))
     else:
         factor = org_size / cols
-        cols = org_size
-        rows = int(round(rows * factor))
+        cols, rows = org_size, int(round(rows * factor))
+      
+    # Redimensionar la imagen  
     gray = cv2.resize(gray, (cols, rows))
     
     # Obtener padding 
