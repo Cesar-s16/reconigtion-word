@@ -3,6 +3,7 @@ Red neuronal multicapas que lee palabras realizadas a mano (Solo letras separada
 
 # Descargas de librerias a utilizar de python:
 
+```
 pip install tensorflow
 pip install keras
 pip install scikit-learn
@@ -12,6 +13,7 @@ pip install matplotlib
 pip install seaborn
 pip install opencv-python
 pip install pygame
+```
 
 # Link de descarga de los CSV de los datasets
 
