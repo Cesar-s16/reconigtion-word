@@ -4,6 +4,7 @@ from  process_image import get_predict_word
 # Colores predefinidos, radio del bolígrafo y color de fondo
 black = [0, 0, 0]
 white = [255, 255, 255]
+light_blue = (173, 216, 230)
 draw_on = False
 last_pos = (0, 0)
 color = (255, 128, 0)
@@ -121,6 +122,11 @@ try:
                     pygame.draw.circle(screen, color, event.pos, radius)
                     roundline(screen, color, event.pos, last_pos, radius)
                 last_pos = event.pos
+
+        # Dibujar franjas azules celestes encima y debajo del área central de dibujo
+        stripe_height = 100
+        pygame.draw.rect(screen, light_blue, [0, 0, width, stripe_height])  # Franja superior
+        pygame.draw.rect(screen, light_blue, [0, height - stripe_height, width, stripe_height])  # Franja inferior
 
        # Dibujar botones
         pygame.draw.rect(screen, (150, 150, 150), (width+50, height-100, 150, 50))
