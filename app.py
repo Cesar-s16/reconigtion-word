@@ -14,11 +14,14 @@ color = black  # Color inicial del bolígrafo
 is_erasing = False  # Variable para indicar si se está borrando
 
 # Tamaño de la pantalla
-width = 640
-height = 400
+width = 700
+height = 500
 
 # Dimensiones del área negra
-black_area_width = 400
+black_area_width = 500
+
+# Dimensiones del área azul celeste
+stripe_height = 125
 
 # Cargar imágenes del lápiz y el borrador
 lapiz_img = pygame.image.load("images/lapiz.png")
@@ -61,10 +64,12 @@ def show_word_pred(predicted_text):
     word = font.render(predicted_text, True, white)
     screen.blit(word, (width+50, height/2.5))
 
-# Recorta la superficie de la imagen
-def crop(original):
+def crop(original): 
+    # Coordenadas del área a recortar, excluyendo las franjas azules
+    crop_area = (0, stripe_height, width-5, height - 2 * stripe_height - 5)
+    
     # Crea una nueva superficie que es una subsuperficie de la original
-    cropped = original.subsurface((0, 0, width-5, height-5))
+    cropped = original.subsurface(crop_area)
     return cropped
 
 # Esta función dibuja una línea redondeada entre dos puntos en una superficie pygame.
@@ -88,10 +93,9 @@ try:
             # Manejar clics de botón "Predecir", "Limpiar" y "Borrador"
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if width + 50 <= event.pos[0] <= width + 200 and height - 100 <= event.pos[1] <= height - 50:
-                    fname = "palabra.png"
                     img = crop(screen)
-                    pygame.image.save(img, fname)
-                    predicted_word = get_predict_word(fname)
+                    pygame.image.save(img, "palabra.png")
+                    predicted_word = get_predict_word("palabra.png")
                     print(predicted_word)
                     show_word_pred(predicted_word)
 
@@ -124,7 +128,6 @@ try:
                 last_pos = event.pos
 
         # Dibujar franjas azules celestes encima y debajo del área central de dibujo
-        stripe_height = 100
         pygame.draw.rect(screen, light_blue, [0, 0, width, stripe_height])  # Franja superior
         pygame.draw.rect(screen, light_blue, [0, height - stripe_height, width, stripe_height])  # Franja inferior
 
