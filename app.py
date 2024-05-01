@@ -134,6 +134,12 @@ try:
         title_width = title.get_width()
         screen.blit(title, ((width - title_width) // 2, 10))  # Centrar el título horizontalmente en la franja superior
 
+        # Mostrar el texto "Proyecto 1 IA" en la franja inferior
+        font = pygame.font.Font(UBUNTU, 100)
+        text = font.render("Proyecto 1 IA", True, black)
+        text_rect = text.get_rect(center=(width // 2, height - stripe_height // 2))
+        screen.blit(text, text_rect)
+
        # Dibujar botones
         pygame.draw.rect(screen, (150, 150, 150), (width+50, height-100, 150, 50))
         pygame.draw.rect(screen, (150, 150, 150), (width+250, height-100, 150, 50))
@@ -145,7 +151,6 @@ try:
         screen.blit(text, (width+275, height-85))
         text = font.render("Borrador", True, (255, 255, 255))  # Texto del botón Borrador
         screen.blit(text, (width+260, height-185))  # Posición del texto del botón Borrador
-
 
         # Actualizar el mensaje del modo del marcador
         font = pygame.font.Font(UBUNTU, 50)

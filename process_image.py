@@ -41,7 +41,7 @@ def get_predict_word(path):
 
     # Ordenar los contornos por posición de izquierda a derecha
     contours_with_index = sorted(enumerate(contours), key=lambda x: cv2.boundingRect(x[1])[0])
-
+    
     predicted_chars = ""
     for original_index, contorno in contours_with_index:
         x, y, w, h = cv2.boundingRect(contorno)
@@ -50,13 +50,20 @@ def get_predict_word(path):
             # Obtener Imagen de zona de interes y refinar la imagen al tamaño 28x28
             image = image_refiner(cv2.bitwise_not(img[y:y+h, x:x+w]))
             
+            # Crear una imagen en blanco para dibujar el contorno
+            contour_image = np.zeros_like(image)
+            
+            # Dibujar el contorno en la imagen en blanco
+            cv2.drawContours(contour_image, [contorno], -1, (255), thickness=cv2.FILLED)
+
+            # Rellenar el contorno en la imagen refinada
+            image[contour_image == 255] = 255
+            
             # Determinar si se necesita aplicar espejo horizontal
-            # Si la letra está más a la izquierda, no es necesario el espejo
             if x < img.shape[1]:
                 image = cv2.flip(image, 1)  # Espejo horizontal
 
-            # Rotar la imagen si es necesario
-            # Ejemplo de rotación de 90 grados hacia la izquierda
+            # Rotar la imagen 90 grados hacia la izquierda
             image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             # Obtener predicción de la letra procesada aplanando la imagen
