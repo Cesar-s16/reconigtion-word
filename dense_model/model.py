@@ -1,7 +1,5 @@
 import tensorflow as tf
 from keras import layers, models
-from keras.preprocessing.sequence import pad_sequences
-from keras.utils import to_categorical
 from keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 import pandas as pd

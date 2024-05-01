@@ -7,21 +7,20 @@ white = [255, 255, 255]
 light_blue = (173, 216, 230)
 draw_on = False
 last_pos = (0, 0)
-color = (255, 128, 0)
 radius = 7
 font_size = 500
 color = black  # Color inicial del bolígrafo
 is_erasing = False  # Variable para indicar si se está borrando
 
 # Tamaño de la pantalla
-width = 700
+width = 750
 height = 500
 
 # Dimensiones del área negra
 black_area_width = 500
 
 # Dimensiones del área azul celeste
-stripe_height = 125
+stripe_height = 140
 
 # Cargar imágenes del lápiz y el borrador
 lapiz_img = pygame.image.load("images/lapiz.png")
@@ -37,16 +36,12 @@ pygame.font.init()
 
 # Fondo
 UBUNTU = "assets/fonts/Ubuntu-BoldItalic.ttf"
-font = pygame.font.Font(UBUNTU, 36)
+font = pygame.font.Font(UBUNTU, 50)
 
 # Dibujar el título sobre la pantalla
 rect = pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
 title = font.render("Tu palabra es:", True, white)
 screen.blit(title, (width+50, height/4))
-
-# Mensaje sobre el modo del marcador
-marker_mode_msg = font.render("Modo: Bolígrafo", True, white)
-marker_mode_pos = (width+50, height/2)  # Posición del mensaje
 
 # Función para actualizar la imagen del marcador
 def update_marker_img():
@@ -58,6 +53,7 @@ def update_marker_img():
         
 # Muestra la predicción del número en la pantalla
 def show_word_pred(predicted_text):
+    font = pygame.font.Font(UBUNTU, 50)
     pygame.draw.rect(screen, black, [width+2, 0, 400, height], 0)
     title = font.render("Tu palabra es:", True, white)
     screen.blit(title, (width+10, height/4))
@@ -100,6 +96,7 @@ try:
                     show_word_pred(predicted_word)
 
                 elif width + 250 <= event.pos[0] <= width + 400 and height - 100 <= event.pos[1] <= height - 50:
+                    font = pygame.font.Font(UBUNTU, 50)
                     screen.fill(white)
                     pygame.draw.rect(screen, black, [width, 0, black_area_width, height], 0)
                     title = font.render("Ingresa Palabra:", True, white)
@@ -131,6 +128,12 @@ try:
         pygame.draw.rect(screen, light_blue, [0, 0, width, stripe_height])  # Franja superior
         pygame.draw.rect(screen, light_blue, [0, height - stripe_height, width, stripe_height])  # Franja inferior
 
+        # Dibujar el título "PIZARRA" en la franja superior
+        title_font = pygame.font.Font(UBUNTU, 100)
+        title = title_font.render("PIZARRA", True, black)
+        title_width = title.get_width()
+        screen.blit(title, ((width - title_width) // 2, 10))  # Centrar el título horizontalmente en la franja superior
+
        # Dibujar botones
         pygame.draw.rect(screen, (150, 150, 150), (width+50, height-100, 150, 50))
         pygame.draw.rect(screen, (150, 150, 150), (width+250, height-100, 150, 50))
@@ -145,10 +148,11 @@ try:
 
 
         # Actualizar el mensaje del modo del marcador
+        font = pygame.font.Font(UBUNTU, 50)
         mode = font.render("Modo:", True, white)
         screen.blit(mode, (width+10, 30))
         update_marker_img()
-        screen.blit(marker_img, (width+90, 10))  # Posición de la imagen del marcador
+        screen.blit(marker_img, (width+165, 31))  # Posición de la imagen del marcador
 
         pygame.display.flip()
         clock.tick(60)
