@@ -7,7 +7,6 @@ white = [255, 255, 255]
 light_blue = (173, 216, 230)
 draw_on = False
 last_pos = (0, 0)
-radius = 7
 font_size = 500
 color = black  # Color inicial del bolígrafo
 is_erasing = False  # Variable para indicar si se está borrando
@@ -58,7 +57,7 @@ def show_word_pred(predicted_text):
     title = font.render("Tu palabra es:", True, white)
     screen.blit(title, (width+10, height/4))
     word = font.render(predicted_text, True, white)
-    screen.blit(word, (width+50, height/2.5))
+    screen.blit(word, (width+40, height/2.5))
 
 def crop(original): 
     # Coordenadas del área a recortar, excluyendo las franjas azules
@@ -107,9 +106,11 @@ try:
                     update_marker_img()  # Actualizar la imagen del marcador
 
             if is_erasing:
-                color = white
+                radius = 12 
+                color = white 
             else:
-                color = black
+                radius = 7 
+                color = black 
 
             # Verificar si el evento del mouse está en el área de escritura
             if event.type == pygame.MOUSEBUTTONDOWN and event.pos[0] < width:

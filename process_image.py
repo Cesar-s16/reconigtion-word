@@ -78,4 +78,7 @@ def get_predict_word(path):
             # Agregar el dígito a la cadena de letras predichos
             predicted_chars += predicted_char
 
-    return predicted_chars
+    if predicted_chars=="":
+        return "No hay palabra"
+    else:
+        return predicted_chars
