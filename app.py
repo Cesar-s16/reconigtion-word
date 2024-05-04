@@ -60,12 +60,16 @@ def show_word_pred(predicted_text):
     screen.blit(word, (width+40, height/2.5))
 
 def crop(original): 
-    # Coordenadas del área a recortar, excluyendo las franjas azules
-    crop_area = (0, stripe_height, width-5, height - 2 * stripe_height - 5)
+    # Dimensiones de las franjas azules a excluir
+    exclude_height = 130
+
+    # Coordenadas del área a recortar, excluyendo una porción más grande de las franjas azules
+    crop_area = (0, exclude_height, width, height - 2 * exclude_height)
     
     # Crea una nueva superficie que es una subsuperficie de la original
     cropped = original.subsurface(crop_area)
     return cropped
+
 
 # Esta función dibuja una línea redondeada entre dos puntos en una superficie pygame.
 def roundline(srf, color, start, end, radius=1):
