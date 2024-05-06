@@ -1,5 +1,5 @@
 import pygame
-from  process_image import get_predict_word
+from  image_processor import get_predict_word
 
 # Colores predefinidos, radio del bolígrafo y color de fondo
 black = [0, 0, 0]
@@ -7,7 +7,6 @@ white = [255, 255, 255]
 light_blue = (173, 216, 230)
 draw_on = False
 last_pos = (0, 0)
-font_size = 500
 color = black  # Color inicial del bolígrafo
 is_erasing = False  # Variable para indicar si se está borrando
 

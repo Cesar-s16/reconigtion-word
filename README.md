@@ -2,7 +2,7 @@
 Red neuronal multicapas que lee palabras realizadas a mano 
 
 > [!NOTE]
-> Unicamente lee letras separadas
+> Unicamente lee letras separadas y escritas en la misma linea
 
 # Descargas de librerias a utilizar de python:
 

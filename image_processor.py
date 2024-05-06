@@ -32,8 +32,10 @@ def image_refiner(gray):
     return gray
 
 def get_predict_word(path):
+    # Lee la imagen en escala de grises desde la ruta especificada
     img = cv2.imread(path, 0)
 
+    # Aplica un umbral a la imagen, convirtiendo los píxeles por debajo de 127 a 0 y los píxeles por encima de 127 a 255
     ret, thresh = cv2.threshold(img, 127, 255, 0)
 
     # Obtener contornos
@@ -42,7 +44,10 @@ def get_predict_word(path):
     # Ordenar los contornos por posición de izquierda a derecha
     contours_with_index = sorted(enumerate(contours), key=lambda x: cv2.boundingRect(x[1])[0])
     
+    # Inicializar cadena de palabra que se leerá
     predicted_chars = ""
+    
+    # Procesar cada contorno encontrado en la imagen umbralizada
     for original_index, contorno in contours_with_index:
         x, y, w, h = cv2.boundingRect(contorno)
 
