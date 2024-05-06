@@ -29,4 +29,5 @@ https://www.mediafire.com/file/zgsm43aesxlbbp3/emnist-letters-train.csv/file
 
 # Imagen de prueba del sistema
 
-![image](https://github.com/Cesar-s16/reconigtion-word/assets/74503185/a6988069-0fb2-44d9-8e76-ea36b7ae1cfe)
+![image](https://github.com/Cesar-s16/reconigtion-word/assets/74503185/920d9d08-91da-4f21-a2e1-6e5c6cb85c06)
+
